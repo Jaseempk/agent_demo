@@ -14,4 +14,5 @@ export type AgentConfig = {
   instructions: string;
   actionProviders: string[];
   networkId?: string;
+  ownerAddress?: `0x${string}`;
 };

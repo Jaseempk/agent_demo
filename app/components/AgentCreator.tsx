@@ -6,13 +6,17 @@ import { getAvailableModels } from "../utils/model-factory";
 import { useAccount } from "wagmi";
 import { useArcaContract } from "../hooks/useArcaContract";
 import { ConnectKitButton } from "connectkit";
+import { useSession, signIn } from "next-auth/react";
+import { config } from "../providers";
+import { getAccount } from "@wagmi/core";
 
 export default function AgentCreator() {
+  const { data: session } = useSession();
   const { isConnected } = useAccount();
   const { createAgent: createAgentOnChain } = useArcaContract();
 
   const [isCreating, setIsCreating] = useState(false);
-  const [config, setConfig] = useState<AgentConfig>({
+  const [configg, setConfig] = useState<AgentConfig>({
     name: "",
     modelProvider: "openai",
     model: "gpt-4o-mini",
@@ -25,28 +29,38 @@ export default function AgentCreator() {
     getAvailableModels("openai")
   );
 
+  const account = getAccount(config);
+
   // Update available models when provider changes
   useEffect(() => {
-    setAvailableModels(getAvailableModels(config.modelProvider));
+    setAvailableModels(getAvailableModels(configg.modelProvider));
 
     // Set first model of the selected provider as default
-    const models = getAvailableModels(config.modelProvider);
-    if (models.length > 0 && !models.find((m) => m.id === config.model)) {
+    const models = getAvailableModels(configg.modelProvider);
+    if (models.length > 0 && !models.find((m) => m.id === configg.model)) {
       setConfig({
-        ...config,
+        ...configg,
         model: models[0].id,
       });
     }
-  }, [config.modelProvider]);
+  }, [configg.modelProvider]);
 
   const handleCreateAgent = async () => {
-    if (!config.name.trim()) {
+    if (!configg.name.trim()) {
       setMessage("Agent name is required");
       return;
     }
 
     if (!isConnected) {
       setMessage("Please connect your wallet first");
+      return;
+    }
+
+    if (!session?.user?.address) {
+      await signIn("credentials", {
+        address: account.address,
+        redirect: false,
+      });
       return;
     }
 
@@ -59,7 +73,11 @@ export default function AgentCreator() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          config,
+          config: {
+            ...configg,
+            ownerAddress: session.user.address,
+            networkId: "base-sepolia",
+          },
           overwrite,
         }),
       });
@@ -82,7 +100,7 @@ export default function AgentCreator() {
         // Then create the agent on-chain using the smart wallet address
         try {
           const txHash = await createAgentOnChain(
-            config.name,
+            configg.name,
             walletData.smartWalletAddress, // Use the agent's smart wallet address
             0 // Initial reputation score
           );
@@ -96,8 +114,8 @@ export default function AgentCreator() {
               ? JSON.parse(storedAgents)
               : [];
 
-            if (!agentList.includes(config.name)) {
-              agentList.push(config.name);
+            if (!agentList.includes(configg.name)) {
+              agentList.push(configg.name);
               localStorage.setItem(
                 "availableAgents",
                 JSON.stringify(agentList)
@@ -109,7 +127,7 @@ export default function AgentCreator() {
 
           // Clear form after successful creation
           setConfig({
-            ...config,
+            ...configg,
             name: "",
             instructions: "",
           });
@@ -131,7 +149,7 @@ export default function AgentCreator() {
 
   const handleModelProviderChange = (provider: ModelProvider) => {
     setConfig({
-      ...config,
+      ...configg,
       modelProvider: provider,
       // Reset model selection when changing providers
       model: getAvailableModels(provider)[0]?.id || "",
@@ -157,8 +175,8 @@ export default function AgentCreator() {
           <input
             type="text"
             className="w-full p-2 rounded border dark:bg-gray-700 dark:border-gray-600"
-            value={config.name}
-            onChange={(e) => setConfig({ ...config, name: e.target.value })}
+            value={configg.name}
+            onChange={(e) => setConfig({ ...configg, name: e.target.value })}
             placeholder="my-agent"
           />
           <p className="text-xs text-gray-500 mt-1">
@@ -175,7 +193,7 @@ export default function AgentCreator() {
             <label className="flex items-center space-x-2">
               <input
                 type="radio"
-                checked={config.modelProvider === "openai"}
+                checked={configg.modelProvider === "openai"}
                 onChange={() => handleModelProviderChange("openai")}
                 name="modelProvider"
               />
@@ -184,7 +202,7 @@ export default function AgentCreator() {
             <label className="flex items-center space-x-2">
               <input
                 type="radio"
-                checked={config.modelProvider === "llama"}
+                checked={configg.modelProvider === "llama"}
                 onChange={() => handleModelProviderChange("llama")}
                 name="modelProvider"
               />
@@ -192,7 +210,7 @@ export default function AgentCreator() {
             </label>
           </div>
 
-          {config.modelProvider === "llama" && (
+          {configg.modelProvider === "llama" && (
             <p className="text-xs text-yellow-600 bg-yellow-100 p-2 rounded mb-2">
               Note: Using Llama models requires running Ollama locally or
               configuring OLLAMA_BASE_URL in your environment variables.
@@ -204,8 +222,8 @@ export default function AgentCreator() {
           <label className="block text-sm font-medium mb-1">Model</label>
           <select
             className="w-full p-2 rounded border dark:bg-gray-700 dark:border-gray-600"
-            value={config.model}
-            onChange={(e) => setConfig({ ...config, model: e.target.value })}
+            value={configg.model}
+            onChange={(e) => setConfig({ ...configg, model: e.target.value })}
           >
             {availableModels.map((model) => (
               <option key={model.id} value={model.id}>
@@ -219,9 +237,9 @@ export default function AgentCreator() {
           <label className="block text-sm font-medium mb-1">Instructions</label>
           <textarea
             className="w-full p-2 rounded border dark:bg-gray-700 dark:border-gray-600 h-24"
-            value={config.instructions}
+            value={configg.instructions}
             onChange={(e) =>
-              setConfig({ ...config, instructions: e.target.value })
+              setConfig({ ...configg, instructions: e.target.value })
             }
             placeholder="You are a helpful agent that can interact with blockchain..."
           />
@@ -236,17 +254,17 @@ export default function AgentCreator() {
               <label key={provider} className="flex items-center space-x-2">
                 <input
                   type="checkbox"
-                  checked={config.actionProviders.includes(provider)}
+                  checked={configg.actionProviders.includes(provider)}
                   onChange={(e) => {
                     if (e.target.checked) {
                       setConfig({
-                        ...config,
-                        actionProviders: [...config.actionProviders, provider],
+                        ...configg,
+                        actionProviders: [...configg.actionProviders, provider],
                       });
                     } else {
                       setConfig({
-                        ...config,
-                        actionProviders: config.actionProviders.filter(
+                        ...configg,
+                        actionProviders: configg.actionProviders.filter(
                           (p) => p !== provider
                         ),
                       });
@@ -277,9 +295,9 @@ export default function AgentCreator() {
 
         <button
           onClick={handleCreateAgent}
-          disabled={isCreating || !config.name}
+          disabled={isCreating || !configg.name}
           className={`px-6 py-2 rounded-full font-semibold transition-all ${
-            isCreating || !config.name
+            isCreating || !configg.name
               ? "bg-gray-300 cursor-not-allowed text-gray-500"
               : "bg-[#0052FF] hover:bg-[#003ECF] text-white shadow-md"
           }`}

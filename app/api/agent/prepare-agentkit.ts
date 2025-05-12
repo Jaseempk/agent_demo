@@ -11,7 +11,8 @@ import {
 } from "@coinbase/agentkit";
 import * as fs from "fs";
 import { Address, Hex } from "viem";
-import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
+import { privateKeyToAccount } from "viem/accounts";
+import { walletManager } from "@/app/utils/wallet-manager";
 
 /**
  * AgentKit Integration Route
@@ -63,58 +64,42 @@ type WalletData = {
  * @throws {Error} If the agent initialization fails.
  */
 export async function prepareAgentkitAndWalletProvider(
-  networkId?: string,
-  actionProviderNames?: string[]
+  agentName: string,
+  ownerAddress: Address,
+  networkId: string
 ): Promise<{
   agentkit: AgentKit;
   walletProvider: WalletProvider;
+  smartWalletAddress: Address;
 }> {
   try {
-    let walletData: WalletData | null = null;
-    let privateKey: Hex | null = null;
-
-    // Read existing wallet data if available
-    if (fs.existsSync(WALLET_DATA_FILE)) {
-      try {
-        walletData = JSON.parse(
-          fs.readFileSync(WALLET_DATA_FILE, "utf8")
-        ) as WalletData;
-        privateKey = walletData.privateKey;
-      } catch (error) {
-        console.error("Error reading wallet data:", error);
-        // Continue without wallet data
-      }
-    }
-
-    if (!privateKey) {
-      if (walletData?.smartWalletAddress) {
-        throw new Error(
-          `Smart wallet found but no private key provided. Either provide the private key, or delete ${WALLET_DATA_FILE} and try again.`
+    console.log("Preparing AgentKit and WalletProvider...");
+    // Get or create wallet for the agent
+    const wallet = await walletManager
+      .getAgentWallet(agentName, ownerAddress)
+      .catch(async () => {
+        // If wallet doesn't exist, create a new one
+        return await walletManager.createAgentWallet(
+          agentName,
+          ownerAddress,
+          networkId
         );
-      }
-      privateKey = (process.env.PRIVATE_KEY || generatePrivateKey()) as Hex;
-    }
+      });
 
-    const signer = privateKeyToAccount(privateKey);
+    console.log("Wallet created:", wallet);
 
-    // Initialize WalletProvider: https://docs.cdp.coinbase.com/agentkit/docs/wallet-management
+    // Initialize wallet provider with the agent's wallet
+    const signer = privateKeyToAccount(wallet.privateKey);
     const walletProvider = await SmartWalletProvider.configureWithWallet({
-      networkId: networkId || process.env.NETWORK_ID || "base-sepolia",
+      networkId,
       signer,
-      smartWalletAddress: walletData?.smartWalletAddress,
-      paymasterUrl: undefined, // Sponsor transactions: https://docs.cdp.coinbase.com/paymaster/docs/welcome
+      paymasterUrl: undefined,
     });
 
     // Create action providers based on user selection
     const getActionProviders = (): ActionProvider[] => {
       // Default to all providers if none specified
-      const providerNames = actionProviderNames || [
-        "weth",
-        "pyth",
-        "wallet",
-        "erc20",
-        "cdpApi",
-      ];
+      const providerNames = ["weth", "pyth", "wallet", "erc20", "cdpApi"];
       const providers: ActionProvider[] = [];
 
       if (providerNames.includes("weth")) {
@@ -160,18 +145,22 @@ export async function prepareAgentkitAndWalletProvider(
     });
 
     // Save wallet data
-    const smartWalletAddress = await walletProvider.getAddress();
+    const smartWalletAddress = walletProvider.getAddress();
     fs.writeFileSync(
       WALLET_DATA_FILE,
       JSON.stringify({
-        privateKey,
+        privateKey: wallet.privateKey,
         smartWalletAddress,
       } as WalletData)
     );
 
-    return { agentkit, walletProvider };
+    return {
+      agentkit,
+      walletProvider,
+      smartWalletAddress: smartWalletAddress as `0x${string}`,
+    };
   } catch (error) {
-    console.error("Error initializing agent:", error);
-    throw new Error("Failed to initialize agent");
+    console.error("Error preparing AgentKit:", error);
+    throw error;
   }
 }

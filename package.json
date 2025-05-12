@@ -23,6 +23,7 @@
     "bs58": "^6.0.0",
     "connectkit": "^1.9.0",
     "next": "14.2.15",
+    "next-auth": "^4.24.11",
     "react": "^18",
     "react-dom": "^18",
     "react-markdown": "^10.0.0",

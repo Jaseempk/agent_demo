@@ -53,9 +53,14 @@ const defaultConfig: AgentConfig = {
  * This function handles the actual initialization of an agent with fresh LLM and tools
  */
 async function initializeAgent(agentConfig: AgentConfig) {
+  if (!agentConfig.ownerAddress) {
+    throw new Error("Owner address is required for agent initialization");
+  }
+
   const { agentkit, walletProvider } = await prepareAgentkitAndWalletProvider(
-    agentConfig.networkId,
-    agentConfig.actionProviders
+    agentConfig.name,
+    agentConfig.ownerAddress,
+    agentConfig.networkId || "base-sepolia"
   );
 
   console.log("Initializing agent with config:", {
