@@ -106,5 +106,14 @@
     "createdAt": 1747113343726,
     "lastUsed": 1747113346326,
     "networkId": "base-sepolia"
+  },
+  "AnaaatherOne": {
+    "agentName": "AnaaatherOne",
+    "privateKey": "0x0383fb39d9dec81a11fce85f5ddcdb7d7d940a50980ba5d3fab0eb29158f0da0",
+    "smartWalletAddress": "0x6b2e400076b79c42E560a9AccfBc87Cc9734433e",
+    "ownerAddress": "0xeE6bA7cd79BB52D2e0947b86155743b22dB78eaE",
+    "createdAt": 1747117719169,
+    "lastUsed": 1747117754945,
+    "networkId": "base-sepolia"
   }
 }
