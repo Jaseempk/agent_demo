@@ -26,6 +26,27 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to see the project.
 
+## Paymaster Integration
+
+This project now includes paymaster functionality for gas-sponsored transactions when creating agents on-chain. This means users don't need to pay gas fees when registering new agents.
+
+To configure the paymaster:
+
+1. Set the following environment variables in your `.env.local` file:
+
+   ```
+   NEXT_PUBLIC_USE_PAYMASTER=true
+   NEXT_PUBLIC_RPC_URL=https://sepolia.base.org
+   NEXT_PUBLIC_SIGNER_PRIVATE_KEY=your_signer_private_key_here
+   ```
+
+2. Ensure you have the `permissionless` package installed:
+   ```
+   npm install permissionless --legacy-peer-deps
+   ```
+
+For more details, see [PAYMASTER_INTEGRATION.md](./PAYMASTER_INTEGRATION.md).
+
 ## Using Llama Models
 
 This project supports using Llama models via [Ollama](https://ollama.com/). To use Llama models:

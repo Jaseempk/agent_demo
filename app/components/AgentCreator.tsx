@@ -118,6 +118,13 @@ export default function AgentCreator() {
 
           setMessage(`Agent created successfully! Transaction hash: ${txHash}`);
 
+          // Add message about paymaster if enabled
+          if (process.env.NEXT_PUBLIC_USE_PAYMASTER === "true") {
+            setMessage(
+              (prevMessage) => `${prevMessage} (Gas sponsored by paymaster)`
+            );
+          }
+
           // Store the agent name in localStorage
           try {
             const storedAgents = localStorage.getItem("availableAgents");

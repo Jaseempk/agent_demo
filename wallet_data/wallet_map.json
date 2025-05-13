@@ -115,5 +115,14 @@
     "createdAt": 1747117719169,
     "lastUsed": 1747117754945,
     "networkId": "base-sepolia"
+  },
+  "AnothereOne": {
+    "agentName": "AnothereOne",
+    "privateKey": "0xec3aee11190b4139ca4cce8aee90b6f37f18ed8a6b587d9b9b76458922adc7a5",
+    "smartWalletAddress": "0xff61B1A1A35B071581e5DecC52C4B273cBF254b8",
+    "ownerAddress": "0xeE6bA7cd79BB52D2e0947b86155743b22dB78eaE",
+    "createdAt": 1747137307877,
+    "lastUsed": 1747137309117,
+    "networkId": "base-sepolia"
   }
 }

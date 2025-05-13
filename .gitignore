@@ -29,6 +29,8 @@ yarn-error.log*
 .env*
 wallet_data.txt
 coinbase_cloud_api_key.json
+/wallet_data
+/wallet_data/wallet_map.json
 
 # vercel
 .vercel
@@ -36,3 +38,4 @@ coinbase_cloud_api_key.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
