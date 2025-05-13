@@ -16,5 +16,95 @@
     "createdAt": 1747071597022,
     "lastUsed": 1747071597022,
     "networkId": "base-sepolia"
+  },
+  "NaaotherOne": {
+    "agentName": "NaaotherOne",
+    "privateKey": "0x9094855f298f062d367751e205cd2b1628569026b9ce8bffcf866ea3c346d338",
+    "smartWalletAddress": "0x",
+    "ownerAddress": "0xF941d25cEB9A56f36B2E246eC13C125305544283",
+    "createdAt": 1747099394201,
+    "lastUsed": 1747099394201,
+    "networkId": "base-sepolia"
+  },
+  "NaaotherOneee": {
+    "agentName": "NaaotherOneee",
+    "privateKey": "0xd63ad3a6b1b3303bce33c4a46831f2c7b29af259ec9b37dec7a461df1629dc84",
+    "smartWalletAddress": "0x",
+    "ownerAddress": "0xF941d25cEB9A56f36B2E246eC13C125305544283",
+    "createdAt": 1747099484099,
+    "lastUsed": 1747099484099,
+    "networkId": "base-sepolia"
+  },
+  "NaaatherOone": {
+    "agentName": "NaaatherOone",
+    "privateKey": "0x66324096f23c61199b44c2c4014554ad8655da1963981497495cb02ba776bf5a",
+    "smartWalletAddress": "0x",
+    "ownerAddress": "0xeE6bA7cd79BB52D2e0947b86155743b22dB78eaE",
+    "createdAt": 1747102115541,
+    "lastUsed": 1747102115541,
+    "networkId": "base-sepolia"
+  },
+  "Newwew": {
+    "agentName": "Newwew",
+    "privateKey": "0x05176247ec8e1ccc4e0880ec893bca5732d30e3de5bb6b8554b93dbd3476760b",
+    "smartWalletAddress": "0x",
+    "ownerAddress": "0xeE6bA7cd79BB52D2e0947b86155743b22dB78eaE",
+    "createdAt": 1747102999350,
+    "lastUsed": 1747103000393,
+    "networkId": "base-sepolia"
+  },
+  "Who knows": {
+    "agentName": "Who knows",
+    "privateKey": "0xff29296a4e6b8403a4ac0751c2c2ee57d074a226599cd49f929ca796a89083e2",
+    "smartWalletAddress": "0x",
+    "ownerAddress": "0xeE6bA7cd79BB52D2e0947b86155743b22dB78eaE",
+    "createdAt": 1747104435989,
+    "lastUsed": 1747104473557,
+    "networkId": "base-sepolia"
+  },
+  "Who knowss": {
+    "agentName": "Who knowss",
+    "privateKey": "0x4314bd1bda859c7cfdaacab4a2aff1a59250f0f9b54530567f5e082d7f4e394c",
+    "smartWalletAddress": "0x1386Fd6034590817A0d732d4234Cebd36395e656",
+    "ownerAddress": "0xeE6bA7cd79BB52D2e0947b86155743b22dB78eaE",
+    "createdAt": 1747104512605,
+    "lastUsed": 1747104512712,
+    "networkId": "base-sepolia"
+  },
+  "Aara": {
+    "agentName": "Aara",
+    "privateKey": "0xfe5997a58d40fffd93c9fc6a67efb37fd94ef600a10150f86221342b6db00d5e",
+    "smartWalletAddress": "0xB0108a4e0268a7B99f4F8DD96dFE0d8a52E2bEf8",
+    "ownerAddress": "0xeE6bA7cd79BB52D2e0947b86155743b22dB78eaE",
+    "createdAt": 1747104636714,
+    "lastUsed": 1747104699062,
+    "networkId": "base-sepolia"
+  },
+  "Aaraa": {
+    "agentName": "Aaraa",
+    "privateKey": "0x61070ccf754bdc9ebd5b45a13e877f241082acd38857529417e99028048441a1",
+    "smartWalletAddress": "0x3E8020a2de035c73edd33c246f02356f34A3a6Ac",
+    "ownerAddress": "0xeE6bA7cd79BB52D2e0947b86155743b22dB78eaE",
+    "createdAt": 1747104795815,
+    "lastUsed": 1747104795844,
+    "networkId": "base-sepolia"
+  },
+  "Mattonn": {
+    "agentName": "Mattonn",
+    "privateKey": "0x47ac553376a3bcc03780097891f5b08b4ba97efd5906189e8ec2bb006eb07921",
+    "smartWalletAddress": "0x2e5343b984ee0097b6100a40834A340a88Ca719F",
+    "ownerAddress": "0xeE6bA7cd79BB52D2e0947b86155743b22dB78eaE",
+    "createdAt": 1747111561566,
+    "lastUsed": 1747111562883,
+    "networkId": "base-sepolia"
+  },
+  "Veendamathum": {
+    "agentName": "Veendamathum",
+    "privateKey": "0xea5ca112477529cdcda8fcb02cec5cb5e1e07cf4bf0e5f87709b69187e6824f9",
+    "smartWalletAddress": "0x91C00Ac8339a0CFc962296d3CBB618F1B2BdBa57",
+    "ownerAddress": "0xeE6bA7cd79BB52D2e0947b86155743b22dB78eaE",
+    "createdAt": 1747113343726,
+    "lastUsed": 1747113346326,
+    "networkId": "base-sepolia"
   }
 }

@@ -83,17 +83,28 @@ export default function AgentCreator() {
       });
 
       const data = await response.json();
+      console.log("daata:", data);
 
       if (data.success) {
         // Get the agent's smart wallet address
-        const walletResponse = await fetch("/api/agent/wallet", {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
+        const walletResponse = await fetch(
+          `/api/agent/wallet?agentName=${encodeURIComponent(configg.name)}`,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+          }
+        );
 
         const walletData = await walletResponse.json();
 
-        if (!walletData.success || !walletData.smartWalletAddress) {
+        console.log("Wallet data:", walletData);
+        console.log(
+          "walletData.smartWalletAddress",
+          walletData.wallet.smartWalletAddress
+        );
+
+        if (!walletData.wallet.smartWalletAddress) {
           throw new Error("Failed to get agent's smart wallet address");
         }
 
@@ -101,7 +112,7 @@ export default function AgentCreator() {
         try {
           const txHash = await createAgentOnChain(
             configg.name,
-            walletData.smartWalletAddress, // Use the agent's smart wallet address
+            walletData.wallet.smartWalletAddress, // Use the agent's smart wallet address
             0 // Initial reputation score
           );
 

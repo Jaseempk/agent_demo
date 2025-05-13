@@ -91,9 +91,12 @@ export async function prepareAgentkitAndWalletProvider(
     // Initialize wallet provider with the agent's wallet
     const signer = privateKeyToAccount(wallet.privateKey);
     const walletProvider = await SmartWalletProvider.configureWithWallet({
-      networkId,
+      networkId: "base-sepolia",
       signer,
-      paymasterUrl: undefined,
+      cdpApiKeyName: process.env.CDP_API_KEY_NAME,
+      cdpApiKeyPrivateKey: process.env.CDP_API_KEY_PRIVATE_KEY,
+      smartWalletAddress: wallet.smartWalletAddress,
+      // paymasterUrl: undefined,
     });
 
     // Create action providers based on user selection

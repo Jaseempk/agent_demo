@@ -72,11 +72,12 @@ class WalletManager {
       signer,
       cdpApiKeyName: process.env.CDP_API_KEY_NAME,
       cdpApiKeyPrivateKey: process.env.CDP_API_KEY_PRIVATE_KEY,
-      smartWalletAddress: "0x",
+      smartWalletAddress: signer.address,
     });
 
     console.log("veendamathum");
     const smartWalletAddress = walletProvider.getAddress() as Address;
+    console.log("smartWalletAddress", smartWalletAddress);
 
     // Create wallet data
     const walletData: AgentWallet = {
