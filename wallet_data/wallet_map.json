@@ -124,5 +124,14 @@
     "createdAt": 1747137307877,
     "lastUsed": 1747137309117,
     "networkId": "base-sepolia"
+  },
+  "VeeereOnn": {
+    "agentName": "VeeereOnn",
+    "privateKey": "0xf309c2e261b0f0b04759bbefced3f27c60af0650d6acb0d693701b4f8c6400dd",
+    "smartWalletAddress": "0x31dc606C532e40A7aC6eFaB49c7b37183b859911",
+    "ownerAddress": "0xeE6bA7cd79BB52D2e0947b86155743b22dB78eaE",
+    "createdAt": 1747142889676,
+    "lastUsed": 1747142890923,
+    "networkId": "base-sepolia"
   }
 }

@@ -1,111 +1,97 @@
-# Onchain Agent Powered by AgentKit
+# AI Agent Creator
 
-This project integrates [AgentKit](https://github.com/coinbase/agentkit) to provide AI-driven interactions with on-chain capabilities. It now supports both OpenAI and Llama models.
+A simple platform that lets you create AI agents capable of performing blockchain operations. Built with AgentKit by Coinbase.
 
-## Getting Started
+## Overview
 
-First, install dependencies:
+This platform allows you to:
 
-```sh
-npm install
-```
+- Create AI agents that can interact with blockchain
+- Use different AI models (OpenAI or Llama)
+- Perform blockchain operations without paying gas fees
+- Customize your agent's capabilities
 
-Then, configure your environment variables:
+## Features
 
-```sh
-cp .env.local .env
-```
+✨ **Free Agent Creation**
 
-Edit `.env` to add your API keys and configuration.
+- Create blockchain-capable agents without gas fees
+- Powered by paymaster integration
 
-Run the development server:
+🤖 **AI Model Options**
 
-```sh
-npm run dev
-```
+- OpenAI models
+- Llama models (via Ollama)
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to see the project.
+🔧 **Customizable Capabilities**
 
-## Paymaster Integration
+- Wallet operations
+- Token transfers
+- Price feeds
+- And more!
 
-This project now includes paymaster functionality for gas-sponsored transactions when creating agents on-chain. This means users don't need to pay gas fees when registering new agents.
+## How It Works
 
-To configure the paymaster:
+1. **Connect Wallet**
 
-1. Set the following environment variables in your `.env.local` file:
+   - Connect your Web3 wallet (like Coinbase Wallet)
 
+2. **Create Agent**
+
+   - Choose a name for your agent
+   - Select AI model (OpenAI or Llama)
+   - Pick capabilities you want
+   - Add custom instructions
+
+3. **Use Agent**
+   - Your agent gets its own blockchain wallet
+   - Start interacting with your agent
+   - Perform blockchain operations
+
+## Quick Start
+
+1. **Install Dependencies**
+
+   ```sh
+   npm install
    ```
-   NEXT_PUBLIC_USE_PAYMASTER=true
-   NEXT_PUBLIC_RPC_URL=https://sepolia.base.org
-   NEXT_PUBLIC_SIGNER_PRIVATE_KEY=your_signer_private_key_here
+
+2. **Set Up Environment**
+
+   ```sh
+   cp .env.local .env
    ```
 
-2. Ensure you have the `permissionless` package installed:
+   Edit `.env` and add your API keys
+
+3. **Start Development Server**
+   ```sh
+   npm run dev
    ```
-   npm install permissionless --legacy-peer-deps
-   ```
+   Open [http://localhost:3000](http://localhost:3000)
 
-For more details, see [PAYMASTER_INTEGRATION.md](./PAYMASTER_INTEGRATION.md).
-
-## Using Llama Models
-
-This project supports using Llama models via [Ollama](https://ollama.com/). To use Llama models:
+## Using Llama Models (Optional)
 
 1. Install Ollama from [ollama.com](https://ollama.com/)
-2. Pull the Llama model:
-   ```
+2. Get the model:
+   ```sh
    ollama pull llama3
    ```
-3. Run Ollama (it should run on http://localhost:11434 by default)
-4. In the agent creation UI, select "Llama" as the model provider
+3. Run Ollama (uses http://localhost:11434)
+4. Select "Llama" when creating your agent
 
-If running Ollama on a different server or port, update the `OLLAMA_BASE_URL` in your `.env` file.
+## Environment Setup
 
-Available Llama models:
+Add these to your `.env.local`:
 
-- llama3 (default)
-- llama3:8b (8B parameters)
-- llama3:70b (70B parameters)
-
-## Configuring Your Agent
-
-You can [modify your configuration](https://github.com/coinbase/agentkit/tree/main/typescript/agentkit#usage) of the agent. By default, your agentkit configuration occurs in the `/api/agent/prepare-agentkit.ts` file, and agent instantiation occurs in the `/api/agent/create-agent.ts` file.
-
-### 1. Select Your LLM Provider and Model
-
-Choose between OpenAI's models or Llama models via Ollama.
-
-### 2. Select Your Wallet Provider
-
-AgentKit requires a **Wallet Provider** to interact with blockchain networks.
-
-### 3. Select Your Action Providers
-
-Action Providers define what your agent can do. You can use built-in providers or create your own.
-
----
-
-## Next Steps
-
-- Explore the AgentKit README: [AgentKit Documentation](https://github.com/coinbase/agentkit)
-- Learn more about available Wallet Providers & Action Providers.
-- Experiment with custom Action Providers for your specific use case.
-
----
+```
+NEXT_PUBLIC_USE_PAYMASTER=true
+NEXT_PUBLIC_RPC_URL=https://sepolia.base.org
+NEXT_PUBLIC_SIGNER_PRIVATE_KEY=your_private_key
+```
 
 ## Learn More
 
-- [Learn more about CDP](https://docs.cdp.coinbase.com/)
-- [Learn more about AgentKit](https://docs.cdp.coinbase.com/agentkit/docs/welcome)
-- [Learn more about Next.js](https://nextjs.org/docs)
-- [Learn more about Tailwind CSS](https://tailwindcss.com/docs)
-- [Learn more about Ollama](https://ollama.com/)
-
----
-
-## Contributing
-
-Interested in contributing to AgentKit? Follow the contribution guide:
-
-- [Contribution Guide](https://github.com/coinbase/agentkit/blob/main/CONTRIBUTING.md)
-- Join the discussion on [Discord](https://discord.gg/CDP)
+- [CDP Documentation](https://docs.cdp.coinbase.com/)
+- [AgentKit Guide](https://docs.cdp.coinbase.com/agentkit/docs/welcome)
+- [Join Discord](https://discord.gg/CDP)
